@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulPath - Book Appointment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff;
+        }
+        .specialist-card {
+            transition: all 0.3s ease;
+        }
+        .specialist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .appointment-modal {
+            transition: all 0.3s ease;
+        }
+        .time-slot {
+            transition: all 0.2s ease;
+        }
+        .time-slot:hover {
+            background-color: #e0f2fe;
+        }
+        .time-slot.selected {
+            background-color: #0ea5e9;
+            color: white;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 py-12">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-primary-800 mb-4">MindfulPath Specialist Booking</h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">Click on any "Book Session" button to see the appointment booking system in action.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Specialist Card 1 -->
+            <div class="specialist-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/300?random=10" alt="Dr. Sarah Johnson" class="w-full h-48 object-cover" loading="lazy">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-primary-800">Dr. Sarah Johnson</h3>
+                    <p class="text-primary-600 mb-3">Clinical Psychologist</p>
+                    <p class="text-gray-600 mb-4">Specializes in anxiety disorders and cognitive behavioral therapy. 10+ years of experience.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-600 ml-1">4.5</span>
+                        </span>
+                        <button class="book-session-btn px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700" data-id="1" data-name="Dr. Sarah Johnson" data-specialty="Clinical Psychologist">Book Session</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Specialist Card 2 -->
+            <div class="specialist-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/300?random=11" alt="Michael Chen" class="w-full h-48 object-cover" loading="lazy">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-primary-800">Michael Chen</h3>
+                    <p class="text-primary-600 mb-3">Licensed Counselor</p>
+                    <p class="text-gray-600 mb-4">Focuses on depression, relationship issues, and life transitions. LGBTQ+ affirming.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="text-gray-600 ml-1">4.8</span>
+                        </span>
+                        <button class="book-session-btn px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700" data-id="2" data-name="Michael Chen" data-specialty="Licensed Counselor">Book Session</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Specialist Card 3 -->
+            <div class="specialist-card bg-white rounded-xl shadow-md overflow-hidden">
+                <img src="https://picsum.photos/400/300?random=12" alt="Dr. Amanda Williams" class="w-full h-48 object-cover" loading="lazy">
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-primary-800">Dr. Amanda Williams</h3>
+                    <p class="text-primary-600 mb-3">Psychiatrist</p>
+                    <p class="text-gray-600 mb-4">Specializes in medication management and integrative approaches to mental health.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-yellow-500">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="text-gray-600 ml-1">4.2</span>
+                        </span>
+                        <button class="book-session-btn px-4 py-2 bg-primary-600 text-white rounded-lg text-sm hover:bg-primary-700" data-id="3" data-name="Dr. Amanda Williams" data-specialty="Psychiatrist">Book Session</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="appointment-modal bg-white rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-primary-800" id="modalTitle">Book Appointment</h3>
+                <button id="closeBookingModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Specialist Info -->
+                <div class="bg-primary-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-primary-800 mb-2">Specialist Information</h4>
+                    <div class="flex items-center mb-4">
+                        <img id="modalSpecialistImage" src="https://picsum.photos/100?random=1" alt="Specialist" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <div>
+                            <p id="modalSpecialistName" class="font-medium"></p>
+                            <p id="modalSpecialty" class="text-primary-600 text-sm"></p>
+                        </div>
+                    </div>
+                    <div class="text-yellow-500 mb-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                        <span class="text-gray-600 ml-1">4.5</span>
+                    </div>
+                    <p class="text-sm text-gray-600">Typically responds within 24 hours</p>
+                </div>
+                
+                <!-- Appointment Form -->
+                <div>
+                    <form id="bookingForm">
+                        <input type="hidden" id="specialistId">
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2" for="sessionType">Session Type</label>
+                            <select id="sessionType" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                <option value="video">Video Consultation</option>
+                                <option value="in-person">In-Person Session</option>
+                                <option value="phone">Phone Consultation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2" for="appointmentDate">Date</label>
+                            <input type="date" id="appointmentDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" min="">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2">Available Time Slots</label>
+                            <div class="grid grid-cols-3 gap-2" id="timeSlots">
+                                <!-- Time slots will be generated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-700 mb-2" for="concern">Brief Concern Description</label>
+                            <textarea id="concern" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" placeholder="Please briefly describe what you'd like to discuss"></textarea>
+                        </div>
+                        
+                        <button type="button" id="confirmBooking" class="w-full bg-primary-600 text-white py-3 rounded-lg hover:bg-primary-700 font-medium">Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-3xl text-green-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-primary-800 mb-2">Appointment Booked!</h3>
+                <p class="text-gray-600 mb-4">Your appointment has been successfully scheduled.</p>
+                <div class="bg-gray-50 p-4 rounded-lg mb-4 text-left">
+                    <p class="font-medium" id="confirmationSpecialist"></p>
+                    <p class="text-sm text-gray-600" id="confirmationDateTime"></p>
+                    <p class="text-sm text-gray-600" id="confirmationType"></p>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">A confirmation email with meeting details has been sent to your email address.</p>
+                <button id="closeConfirmationModal" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-medium">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const bookSessionButtons = document.querySelectorAll('.book-session-btn');
+        const bookingModal = document.getElementById('bookingModal');
+        const closeBookingModal = document.getElementById('closeBookingModal');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const closeConfirmationModal = document.getElementById('closeConfirmationModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSpecialistName = document.getElementById('modalSpecialistName');
+        const modalSpecialty = document.getElementById('modalSpecialty');
+        const modalSpecialistImage = document.getElementById('modalSpecialistImage');
+        const specialistId = document.getElementById('specialistId');
+        const appointmentDate = document.getElementById('appointmentDate');
+        const timeSlotsContainer = document.getElementById('timeSlots');
+        const confirmBooking = document.getElementById('confirmBooking');
+        const confirmationSpecialist = document.getElementById('confirmationSpecialist');
+        const confirmationDateTime = document.getElementById('confirmationDateTime');
+        const confirmationType = document.getElementById('confirmationType');
+        
+        // Set minimum date to today
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        appointmentDate.min = todayStr;
+        
+        // Specialist data
+        const specialists = {
+            1: {
+                name: "Dr. Sarah Johnson",
+                specialty: "Clinical Psychologist",
+                image: "https://picsum.photos/100?random=10"
+            },
+            2: {
+                name: "Michael Chen",
+                specialty: "Licensed Counselor",
+                image: "https://picsum.photos/100?random=11"
+            },
+            3: {
+                name: "Dr. Amanda Williams",
+                specialty: "Psychiatrist",
+                image: "https://picsum.photos/100?random=12"
+            }
+        };
+        
+        // Available time slots (in a real app, this would come from the backend)
+        const availableTimeSlots = [
+            "09:00 AM", "10:00 AM", "11:00 AM", 
+            "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"
+        ];
+        
+        // Event Listeners
+        bookSessionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const specialty = button.getAttribute('data-specialty');
+                
+                openBookingModal(id, name, specialty);
+            });
+        });
+        
+        closeBookingModal.addEventListener('click', () => {
+            bookingModal.classList.add('hidden');
+        });
+        
+        closeConfirmationModal.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+        });
+        
+        appointmentDate.addEventListener('change', generateTimeSlots);
+        
+        confirmBooking.addEventListener('click', confirmAppointment);
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === bookingModal) {
+                bookingModal.classList.add('hidden');
+            }
+            if (e.target === confirmationModal) {
+                confirmationModal.classList.add('hidden');
+            }
+        });
+        
+        // Functions
+        function openBookingModal(id, name, specialty) {
+            specialistId.value = id;
+            modalTitle.textContent = `Book with ${name}`;
+            modalSpecialistName.textContent = name;
+            modalSpecialty.textContent = specialty;
+            modalSpecialistImage.src = specialists[id].image;
+            
+            // Reset form
+            document.getElementById('sessionType').value = 'video';
+            appointmentDate.value = '';
+            document.getElementById('concern').value = '';
+            
+            // Clear time slots
+            timeSlotsContainer.innerHTML = '';
+            
+            bookingModal.classList.remove('hidden');
+        }
+        
+        function generateTimeSlots() {
+            const selectedDate = appointmentDate.value;
+            if (!selectedDate) return;
+            
+            timeSlotsContainer.innerHTML = '';
+            
+            availableTimeSlots.forEach(time => {
+                const timeSlot = document.createElement('div');
+                timeSlot.classList.add('time-slot', 'text-center', 'py-2', 'rounded', 'border', 'border-gray-300', 'cursor-pointer');
+                timeSlot.textContent = time;
+                
+                timeSlot.addEventListener('click', () => {
+                    // Remove selected class from all time slots
+                    document.querySelectorAll('.time-slot').forEach(slot => {
+                        slot.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked time slot
+                    timeSlot.classList.add('selected');
+                });
+                
+                timeSlotsContainer.appendChild(timeSlot);
+            });
+        }
+        
+        function confirmAppointment() {
+            const selectedTimeSlot = document.querySelector('.time-slot.selected');
+            
+            if (!appointmentDate.value) {
+                alert('Please select a date for your appointment');
+                return;
+            }
+            
+            if (!selectedTimeSlot) {
+                alert('Please select a time slot for your appointment');
+                return;
+            }
+            
+            // Format date for display
+            const dateObj = new Date(appointmentDate.value);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = dateObj.toLocaleDateString('en-US', options);
+            
+            // Get session type text
+            const sessionTypeSelect = document.getElementById('sessionType');
+            const sessionTypeText = sessionTypeSelect.options[sessionTypeSelect.selectedIndex].text;
+            
+            // Set confirmation details
+            confirmationSpecialist.textContent = `${modalSpecialistName.textContent} - ${modalSpecialty.textContent}`;
+            confirmationDateTime.textContent = `${formattedDate} at ${selectedTimeSlot.textContent}`;
+            confirmationType.textContent = `Session Type: ${sessionTypeText}`;
+            
+            // Show confirmation modal
+            bookingModal.classList.add('hidden');
+            confirmationModal.classList.remove('hidden');
+            
+            // In a real application, you would send this data to your backend here
+            console.log('Appointment booked:', {
+                specialistId: specialistId.value,
+                specialistName: modalSpecialistName.textContent,
+                date: appointmentDate.value,
+                time: selectedTimeSlot.textContent,
+                type: sessionTypeSelect.value,
+                concern: document.getElementById('concern').value
+            });
+        }
+    </script>
+</body>
+</html>
